@@ -29,7 +29,13 @@ class AffineCipher{
         for(int i=0;i<plain.length();i++){
             int y = plain_char[i] - 97;
             if((int)(c*(y-b))<0){
-                plain_char[i] = (char)(26 + (c*(y-b)));
+                int g = c*(y-b);
+                if(-1*g>26){
+                    g*=-1;
+                    g%=26;
+                    g*=-1;
+                }
+                plain_char[i] = (char)(26 + g);
             }else{
                 plain_char[i] = (char)((c*(y-b))%26);
             }
