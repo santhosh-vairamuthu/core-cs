@@ -33,8 +33,7 @@ public class HillCipher {
             mul[1][0] = plain_char[k+1] - 97;
             mul[2][0] = plain_char[k+2] - 97;
         }
-
-
+        
     }
 }
 
