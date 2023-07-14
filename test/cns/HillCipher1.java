@@ -77,6 +77,10 @@ public class HillCipher{
             determinant = (key[0][0]*((key[1][1]*key[2][2])-(key[1][2]*key[2][1])));
             determinant -= (key[0][1]*((key[1][0]*key[2][2]) - (key[1][2]*key[2][0])));
             determinant += (key[0][2]*((key[1][0]*key[2][1])-(key[1][1]*key[2][0])));
+            if(determinant == 0){
+                System.out.print("Key Matrix Invalid");
+                return;
+            }
             int inverse=0;
             for(int i=0;i<26;i++){
                 if((determinant*i)%26==1){
