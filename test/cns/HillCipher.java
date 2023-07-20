@@ -1,151 +1,142 @@
 import java.util.*;
 public class HillCipher{
     public static void main(String[] args){
-        System.out.print("If you want to perform\n1.Encryption\n2.Decryption\n\nEnter the choice : ");
-        Scanner sc=new Scanner(System.in);
+        Scanner sc = new Scanner(System.in);
+        System.out.print("Encryption [1]\nDecryption[2]\nEnter your choice : ");
         int n=sc.nextInt();
+        sc.nextLine();
         if(n==1){
             System.out.print("Enter the plain text : ");
-            sc.nextLine();
             String s=sc.nextLine();
             s=s.toLowerCase();
-            int i,j,k,l,index=0,index1=0,index2=0,b,index3=0,index4=0;
-            for(i=0;i<s.length();i++){
-                if(s.charAt(i)==' '){
-                    index++;
-                }
-            }char arr[]=new char[s.length()-index],resarr[]=new char[s.length()-index];
+            int len=0,c=s.length()%3;
+            for(int i=0;i<c;i++){
+                s+="x";
+            }
+            char arr[] = s.toCharArray();
+            String chiper = "";
             System.out.println("Enter the key : ");
-            int a[][]=new int[3][3];
-            for(i=0;i<3;i++){
-                for(j=0;j<3;j++){
-                    a[i][j]=sc.nextInt();
+            int key[][]= new int[3][3];
+            for(int i=0;i<3;i++){
+                for(int j=0;j<3;j++){
+                    key[i][j]=sc.nextInt();
                 }
-            }for(i=0;i<s.length();i++){
-                if(s.charAt(i)!=' '){
-                    arr[index2++]=s.charAt(i);
+                sc.nextLine();
+            }
+            int b=arr.length/3;
+            for(int i=0;i<b;i++){
+                int[][] mat = new int[3][1];
+                int[][] result = new int[3][1];
+                for(int j=0;j<3;j++){
+                    mat[j][0] = arr[len++]-97;
                 }
-            }int c=arr.length%3;
-            if(c==0){
-                b=arr.length/3;
-            }else{
-                b=(arr.length/3);
-                b++;
-            }for(i=0;i<b;i++){
-                int mat[][]=new int[3][1];
-                for(j=0;j<3;j++){
-                    mat[j][0]=arr[index1++]-97;
-                }int[][] result=new int[3][1];
-                for(j=0;j<3;j++) {
-                    for(k=0;k<1;k++) {
-                        for(l=0;l<3;l++) {
-                            result[j][k]+=a[j][l]*mat[l][k];
+                for(int j=0;j<3;j++) {
+                    for(int k=0;k<3;k++) {
+                        result[j][0] += key[j][k]*mat[k][0];
+                    }
+                }
+                for(int j=0;j<3;j++){
+                    int y =  result[j][0];
+                    if(y>=0){
+                        y%=26;
+                    }
+                    else{
+                        y*=-1;
+                        y%=26;
+                        if(y!=0){
+                            y*=-1;
+                            y = 26 + y;
                         }
                     }
-                }for(j=0;j<3;j++){
-                    result[j][0]%=26;
-                    if(result[j][0]<0){
-                        result[j][0]=26-result[j][0];
-                    }char ch=(char)(result[j][0]+65);
-                    resarr[index3++]=ch;
-                }
-            }System.out.print("The cipher text is : ");
-            for(i=0;i<s.length();i++){
-                if(s.charAt(i)==' '){
-                    System.out.print(" ");
-                }else{
-                    System.out.print(resarr[index4++]);
+                    char ch=(char)(y + 97);
+                    chiper += ch;
                 }
             }
-        }else if(n==2){
+            System.out.print("The cipher text is : "+chiper.substring(0,s.length()-c));
+        }else{ 
             System.out.print("Enter the cipher text : ");
-            sc.nextLine();
             String s=sc.nextLine();
             s=s.toLowerCase();
-            int i,j,k,index=0,index2=0;
-            for(i=0;i<s.length();i++){
-                if(s.charAt(i)==' '){
-                    index++;
-                }
-            }char arr[]=new char[s.length()-index],resarr[]=new char[s.length()-index];
+            int len=0,c=s.length()%3;
+            for(int i=0;i<c;i++){
+                s+="x";
+            }
+            char arr[] = s.toCharArray();
+            String plain = "";
             System.out.println("Enter the key : ");
-            int a[][]=new int[3][3],adja[][]=new int [3][3],adj[][]=new int[3][3];
-            for(i=0;i<3;i++){
-                for(j=0;j<3;j++){
-                    a[i][j]=sc.nextInt();
+            int key[][] = new int[3][3];
+            int adjacent[][] = new int [3][3];
+            // int adj[][] = new int[3][3];
+            for(int i=0;i<3;i++){
+                for(int j=0;j<3;j++){
+                    key[i][j]=sc.nextInt();
                 }
-            }for(i=0;i<s.length();i++){
-                if(s.charAt(i)!=' '){
-                    arr[index2++]=s.charAt(i);
-                }
-            }int index1=0,l,detk=(a[0][0]*((a[1][1]*a[2][2])-(a[1][2]*a[2][1])))-(a[0][1]*((a[1][0]*a[2][2])-(a[1][2]*a[2][0])))+(a[0][2]*((a[1][0]*a[2][1])-(a[1][1]*a[2][0])));
-            detk%=26;
-            if(detk<0){
-                detk=26+detk;
-            }adja[0][0]=((a[1][1]*a[2][2])-(a[1][2]*a[2][1]));
-            adja[0][1]=0-((a[1][0]*a[2][2])-(a[1][2]*a[2][0]));
-            adja[0][2]=((a[1][0]*a[2][1])-(a[1][1]*a[2][0]));
-            adja[1][0]=0-((a[0][1]*a[2][2])-(a[0][2]*a[2][1]));
-            adja[1][1]=((a[0][0]*a[2][2])-(a[0][2]*a[2][0]));
-            adja[1][2]=0-((a[0][0]*a[2][1])-(a[0][1]*a[2][0]));
-            adja[2][0]=((a[0][1]*a[1][2])-(a[0][2]*a[1][1]));
-            adja[2][1]=0-((a[0][0]*a[1][2])-(a[0][2]*a[1][0]));
-            adja[2][2]=((a[0][0]*a[1][1])-(a[0][1]*a[1][0]));
-            for(i=0;i<3;i++){
-                for(j=0;j<3;j++){
-                    adj[j][i]=adja[i][j]%26;
-                    if(adj[j][i]<0){
-                        adj[j][i]=26+adj[j][i];
-                    }
+                sc.nextLine();
+            }
+            int determinant=0;
+            determinant = (key[0][0]*((key[1][1]*key[2][2])-(key[1][2]*key[2][1])));
+            determinant -= (key[0][1]*((key[1][0]*key[2][2]) - (key[1][2]*key[2][0])));
+            determinant += (key[0][2]*((key[1][0]*key[2][1])-(key[1][1]*key[2][0])));
+            if(determinant == 0){
+                System.out.print("Key Matrix Invalid");
+                return;
+            }
+            int inverse=0;
+            for(int i=0;i<26;i++){
+                if((determinant*i)%26==1){
+                    inverse=i;
                 }
             }
-            int r1=26,r2=detk,t1=0,t2=1;
-            while(r2!=0){
-                int q=r1/r2,r=r1%r2;
-                int t=t1-(q*t2);
-                t1=t2;
-                t2=t;
-                r1=r2;
-                r2=r;
-            }int det=t1,kinverse[][]=new int[3][3];
-            if(det<0){
-                det+=26;
-            }for(i=0;i<3;i++){
-                for(j=0;j<3;j++){
-                    kinverse[i][j]=(adj[i][j]*det)%26;
-                }
-            }int c=arr.length%3,b,index3=0,index4=0;
-            if(c==0){
-                b=arr.length/3;
+            if(inverse>0){
+                inverse%=26;
             }else{
-                b=(arr.length/3);
-                b++;
-            }for(i=0;i<b;i++){
-                int mat[][]=new int[3][1];
-                for(j=0;j<3;j++){
-                    mat[j][0]=arr[index1++]-97;
-                }int[][] result=new int[3][1];
-                for(j=0;j<3;j++) {
-                    for(k=0;k<1;k++) {
-                        for(l=0;l<3;l++) {
-                            result[j][k]+=kinverse[j][l]*mat[l][k];
+                inverse*=-1;
+                inverse%=26;
+                if(inverse!=0){
+                    inverse*=-1;
+                    inverse = 26 + inverse;
+                }
+            }
+            adjacent[0][0] = ((key[1][1]*key[2][2])-(key[1][2]*key[2][1]));
+            adjacent[1][0] = (-1) * ((key[1][0]*key[2][2])-(key[1][2]*key[2][0]));
+            adjacent[2][0] = ((key[1][0]*key[2][1])-(key[1][1]*key[2][0]));
+            adjacent[0][1] = (-1) * ((key[0][1]*key[2][2])-(key[0][2]*key[2][1]));
+            adjacent[1][1] = ((key[0][0]*key[2][2])-(key[0][2]*key[2][0]));
+            adjacent[2][1] = (-1) * ((key[0][0]*key[2][1])-(key[0][1]*key[2][0]));
+            adjacent[0][2] = ((key[0][1]*key[1][2])-(key[0][2]*key[1][1]));
+            adjacent[1][2] = (-1) * ((key[0][0]*key[1][2])-(key[0][2]*key[1][0]));
+            adjacent[2][2] = ((key[0][0]*key[1][1])-(key[0][1]*key[1][0]));
+            int b = arr.length/3;
+            for(int i=0;i<b;i++){
+                int[][] mat = new int[3][1];
+                int[][] result = new int[3][1];
+                for(int j=0;j<3;j++){
+                    mat[j][0] = arr[len++]-97;
+                }
+                for(int j=0;j<3;j++) {
+                    for(int k=0;k<3;k++) {
+                        result[j][0]+=adjacent[j][k] * mat[k][0];
+                    }
+                }
+                for(int j=0;j<3;j++){
+                    int y = inverse *  result[j][0];;
+                    if(y>=0){
+                        y%=26;
+                    }
+                    else{
+                        y*=-1;
+                        y%=26;
+                        if(y!=0){
+                            y*=-1;
+                            y = 26 + y;
                         }
                     }
-                }for(j=0;j<3;j++){
-                    result[j][0]%=26;
-                    if(result[j][0]<0){
-                        result[j][0]=26-result[j][0];
-                    }char ch=(char)(result[j][0]+65);
-                    resarr[index3++]=ch;
-                }
-            }System.out.print("The cipher text is : ");
-            for(i=0;i<s.length();i++){
-                if(s.charAt(i)==' '){
-                    System.out.print(" ");
-                }else{
-                    System.out.print(resarr[index4++]);
+                    char ch=(char)(y + 97);
+                    plain += ch;
                 }
             }
+            System.out.print("The plain text is : "+plain.substring(0,s.length()-c));
         }
+        sc.close();
     }
 }
