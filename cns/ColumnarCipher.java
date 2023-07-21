@@ -76,10 +76,7 @@ public class ColumnarCipher {
         if(ch==1){
             System.out.println("Cipher text  : "+encrypt(text,arr));
         }else{
-            System.out.println("Cipher text  : "+decrypt(text,arr));
+            System.out.println("Plain text  : "+decrypt(text,arr));
         }
-        // for(int i=0;i<arr.length;i++){
-        //     System.out.println(arr[i]);
-        // }
     }
 }

@@ -68,11 +68,7 @@ public class RailCipher {
         System.out.print("Enter a choice [1] - ENCRYPT / [2] - DECRYPT: ");
         int ch = s.nextInt();
         s.nextLine();
-        if (ch == 1) {
-            System.out.print("Enter a plain text : ");
-        } else {
-            System.out.print("Enter a cipher text : ");
-        }
+        System.out.print("Enter a text : ");
         String text = s.nextLine();
         System.out.print("Enter a key : ");
         int key = s.nextInt();
