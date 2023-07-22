@@ -18,3 +18,7 @@ Anyone can contribute their code to this repository. To add your program, either
 4. Commit your changes: `git commit -m "Add your commit message"`.
 5. Push to the branch: `git push origin your-branch-name`.
 6. Submit a pull request.
+
+## License
+
+This project is licensed under the [GNU GENERAL PUBLIC LICENSE](./LICENSE).
