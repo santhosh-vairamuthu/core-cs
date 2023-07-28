@@ -45,6 +45,15 @@ class SDES{
         }
         return text;
     }
+    public static String ePermutation4(char[] txt){
+        //Rearrange this according to your wish
+        int[] arr = {1,3,2,0};
+        String text = "";
+        for(int i=0;i<arr.length;i++){
+            text += txt[arr[i]];
+        }
+        return text;
+    }
     public static String xor(char[] txt, char[] key){
         String text="";
         for(int i=0;i<txt.length;i++){
@@ -149,6 +158,27 @@ class SDES{
         return inverseInitialPermutation8(comrhip2.toCharArray());
     }
 
+    public static String decrypt(char[] text, char[] key){
+        String key1 = ePermutation10(shift(initialPermutation10(key).toCharArray(),1).toCharArray());
+        String key2 = ePermutation10(shift(initialPermutation10(key).toCharArray(),3).toCharArray());
+
+        String ip = initialPermutation8(text);
+        String ep = ePermutation8(ip.toCharArray());
+        String aftxor = xor(ep.toCharArray(), key2.toCharArray());
+        String p4 = combine(aftxor.toCharArray());
+        String ep0 = ePermutation4(p4.toCharArray());
+        String aftxor1 = xor((ip.substring(0, 4)).toCharArray(),ep0.toCharArray());
+        String comrhip = (ip.substring(4, 8)) + aftxor1 ;
+
+        String ep1 = ePermutation8(comrhip.toCharArray());
+        String aftxor2 = xor(ep1.toCharArray(), key1.toCharArray());
+        String p4_1 = combine(aftxor2.toCharArray());
+        String ep2 = ePermutation4(p4_1.toCharArray());
+        String aftxor3 = xor((comrhip.substring(0, 4)).toCharArray(),ep2.toCharArray());
+        String comrhip1 = aftxor3 + (comrhip.substring(4, 8));
+        return inverseInitialPermutation8(comrhip1.toCharArray());
+    }
+
     public static void main(String args[]){
         Scanner s = new Scanner(System.in);
         System.out.print("Enter a choice [1] - ENCRYPT / [2] - DECRYPT: ");
@@ -161,9 +191,10 @@ class SDES{
         if (ch == 1) {
             System.out.println("Cipher Text : " + encrypt(text.toCharArray(), key.toCharArray()));
             // encrypt(text.toCharArray(), key.toCharArray());
+        }else {
+            System.out.println("Plain Text : " + decrypt(text.toCharArray(), key.toCharArray()));
+            // decrypt(text.toCharArray(), key.toCharArray());
         }
-        // } else {
-        //     System.out.println("Plain Text : " + decrypt(text, key));
-        // }
+        
     }
 }
