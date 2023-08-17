@@ -7,8 +7,8 @@ public class RSA {
         } else if (x == 2) {
             return 1;
         } else {
-            for (int i = 2; i * i <= x; i++) {
-                if (x % i == 0) {
+            for (int i = 2; i*i <= x; i++) {
+                if (x%i == 0) {
                     return 0;
                 }
             }
@@ -20,13 +20,13 @@ public class RSA {
         if (b == 0) {
             return a;
         }
-        return gcd(b, a % b);
+        return gcd(b, a%b);
     }
     
     public static int calculate_d(int e, int phi_n) {
         int d = 0;
-        for (int i = 2; i < phi_n; i++) {
-            if ((e * i) % phi_n == 1) {
+        for (int i=2;i<phi_n;i++) {
+            if ((e*i) % phi_n == 1) {
                 d = i;
                 break;
             }
@@ -36,11 +36,11 @@ public class RSA {
 
     public static long modularExponentiation(long b, int e, int m) {
         long r = 1;
-        while (e > 0) {
-            if (e % 2 == 1) {
-                r = (r * b) % m;
+        while (e>0) {
+            if (e%2 == 1) {
+                r = (r*b)%m;
             }
-            b = (b * b) % m;
+            b = (b*b)%m;
             e /= 2;
         }
         return r;
@@ -56,10 +56,10 @@ public class RSA {
             System.out.println("P or Q is not prime");
             return;
         }
-        int n = p * q, pi = (p - 1) * (q - 1);
+        int n = p*q, pi = (p-1) * (q-1);
         System.out.print("Enter the value of E : ");
         int e = s.nextInt(); s.nextLine();
-        if (!((e > 1 && e < pi) && (gcd(e, pi) == 1))) {
+        if (!((e>1 && e<pi) && (gcd(e, pi) == 1))) {
             System.out.println("Invalid Value for E");
             return;
         }
@@ -75,5 +75,6 @@ public class RSA {
         // Decryption
         long decrypted = modularExponentiation(cipher, d, n);
         System.out.println("Decrypted Message : " + decrypted);
+        s.close();
     }
 }
