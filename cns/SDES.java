@@ -172,3 +172,8 @@ class SDES{
         s.close();
     }
 }
+
+
+// = (1+(2 * pi))/e;
+//         double decrypt = (Math.pow(cipher,d)%n);
+//         System.out.println("Plain Text : "+decrypt);
