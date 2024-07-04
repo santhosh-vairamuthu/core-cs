@@ -1,4 +1,4 @@
-# Random Programming Stuffs
+# Core Computer Science programs
 
 If you find this repository useful, please consider giving it a ⭐️ star.
 
